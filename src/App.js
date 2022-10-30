@@ -4,14 +4,18 @@ import Header from './components/Header';
 import Figure from './components/Figure';
 import WrongLetters from './components/WrongLetters';
 import Word from './components/Word';
+import Popup from './components/Popup';
+import Notification from './components/Notification';
+import { showNotification as show } from './helpers/helpers';
 
-const words = ['эверест', 'инсталляция', 'чародей', 'банши'];
+const words = ['кофемолка', 'инсталляция', 'чародей', 'кристалл'];
 let selectedWord = words[Math.floor(Math.random() * words.length)];
 
 function App() {
   const [playable, setPlayable] = useState(true);
   const [correctLetters, setCorrectLetters] = useState([]);
   const [wrongLetters, setWrongLetters] = useState([]);
+  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
     const handleKeydown = event => {
@@ -22,13 +26,13 @@ function App() {
           if (!correctLetters.includes(letter)) {
             setCorrectLetters(currentLetters => [...currentLetters, letter]);
           } else {
-            //show(setShowNotification);
+              show(setShowNotification);
           }
         } else {
           if (!wrongLetters.includes(letter)) {
             setWrongLetters(currentLetters => [...currentLetters, letter]);
           } else {
-           // show(setShowNotification);
+            show(setShowNotification);
           }
         }
       }
@@ -38,17 +42,35 @@ function App() {
     return () => window.removeEventListener('keydown', handleKeydown);
   }, [correctLetters, wrongLetters, playable]);
 
+  const playAgain = () => {
+    setPlayable(true);
+    setCorrectLetters([]);
+    setWrongLetters([]);
+
+    const random = Math.floor(Math.random() * words.length);
+    selectedWord = words[random];
+  }
+
   return (
     <div className="App">
       <>
         <Header />
         <div className="game-container">
-          <Figure />
+          <Figure wrongLetters={wrongLetters} />
           <WrongLetters wrongLetters={wrongLetters} />
           <Word 
             selectedWord={selectedWord}
-            correctLetters={correctLetters} />
+            correctLetters={correctLetters}
+           />
         </div>
+          <Popup 
+            correctLetters={correctLetters}
+            wrongLetters={wrongLetters}
+            selectedWord={selectedWord}
+            setPlayable={setPlayable}
+            playAgain={playAgain}
+          />
+          <Notification showNotification={showNotification} />
       </>
     </div>
   );
