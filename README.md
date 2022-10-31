@@ -1,3 +1,11 @@
+# hangmanGameReact
+Приложение представляет собой игру "Висельник". Пользователь должен правильно угадать все буквы, входящие в загаданное слово. При каждой неправильной попытке на "висельницы" появляется часть человека. Все неправильные буквы записываются, загадать их больше нельзя. По окончании игры есть возможность сыграть заново.
+
+Важно: все слова загаданы на русском
+
+# GitHub Pages
+[Посмотреть!](https://mrsdante.github.io/hangmanGameReact/)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
